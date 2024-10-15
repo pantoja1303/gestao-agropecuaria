@@ -1,7 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
+<x-layout title="Animais">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -41,8 +38,6 @@
             </div>
         </div>
     </div>
-</div>
-
 <style>
     .card {
         border-radius: 10px;
@@ -52,4 +47,4 @@
         margin-bottom: 20px;
     }
 </style>
-@endsection
+</x-layout>

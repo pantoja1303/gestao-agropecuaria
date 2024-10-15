@@ -51,7 +51,7 @@ class AnimalController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Animal $animal, Request $request)
     {
         return view('animals.edit', compact('animal'));
     }
@@ -81,7 +81,7 @@ class AnimalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Animal $animal,Request $request)
     {
         $animal->delete();
 

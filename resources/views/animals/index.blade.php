@@ -1,18 +1,12 @@
-<!-- resources/views/animals/index.blade.php -->
-
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <h1>Animais</h1>
-    <a href="{{ route('animals.create') }}" class="btn btn-primary">Cadastrar Novo Animal</a>
-    <table class="table">
+<x-layout title="Animais">
+    <a href="{{ route('animals.create') }}" class="btn btn-primary mb-3">Cadastrar Novo Animal</a>
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Brinco</th>
-                <th>Tipo</th>
-                <th>Raça</th>
-                <th>Origem</th>
+                <th scope="col">Brinco</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Raça</th>
+                <th scope="col">Origem</th>
             </tr>
         </thead>
         <tbody>
@@ -34,5 +28,4 @@
             @endforeach
         </tbody>
     </table>
-</div>
-@endsection
+</x-layout>
