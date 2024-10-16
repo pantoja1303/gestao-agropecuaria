@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Animal;
 
 class AnimalController extends Controller
@@ -12,7 +13,15 @@ class AnimalController extends Controller
      */
     public function index()
     {
-        $animals = Animal::all();
+
+        $animals = DB::table('animals')
+        ->leftJoin('origins', 'animals.origin_id', '=', 'origins.id')
+        ->leftJoin('animal_type', 'animals.animal_type_id', '=', 'animal_type.id')
+        ->leftJoin('animal_breed', 'animals.animal_breed_id', '=', 'animal_breed.id')
+        ->select('animals.*', 'origins.description as origin_description','animal_type.description as animal_type_description','animal_breed.description as animal_breed_description') 
+        ->get();
+
+        //$animals = Animal::all();
         return view('animals.index', compact('animals'));
     }
 
