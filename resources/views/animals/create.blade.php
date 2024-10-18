@@ -13,20 +13,36 @@
                             <input type="number" name="ear_tag_number" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label for="especie">Raça</label>
-                            <input type="number" name="id_breed" class="form-control" required>
+                        <div class="form-group">
+                            <label for="breed">Raça</label>
+                            <select name="breed_id" id="breed_id" class="form-control">
+                                <option value="">Selecione uma raça</option>
+                                @foreach ($breeds as $breed)
+                                    <option value="{{ $breed->id }}">{{ $breed->description }}</option>
+                                @endforeach
+                        </select>
                         </div>
                         <div class="form-group">
-                            <label for="tipo">Tipo do Animal</label>
-                            <input type="number" name="type_of_animal" class="form-control" required>
+                            <label for="type">Tipo do Animal</label>
+                            <select name="type_id" id="type_id" class="form-control">
+                                <option value="">Selecione um tipo</option>
+                                @foreach ($types as $type)
+                                    <option value="{{ $type->id }}">{{ $type->description }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="origem">Origem</label>
-                            <input type="number" name="origin" class="form-control" required>
+                             <label for="origin_id">Origem</label>
+                            <select name="origin_id" id="origin_id" class="form-control">
+                                <option value="">Selecione uma origem</option>
+                                @foreach ($origins as $origin)
+                                    <option value="{{ $origin->id }}">{{ $origin->description }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="data_compra">Data de Compra</label>
-                            <input type="date" name="purchase_date" class="form-control" required>
+                            <input type="date" name="purchase_date" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="data_nascimento">Data de Nascimento</label>
