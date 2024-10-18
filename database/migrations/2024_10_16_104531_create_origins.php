@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $sql = File::get(database_path('sql/database_structure2.sql'));
-
-        // Executa o SQL usando o método 'unprepared' (para múltiplos comandos SQL)
-        DB::unprepared($sql);
+        Schema::create('origin', function (Blueprint $table) {
+            $table->id();
+            $table->string('description')->unique()->comment('Descrição da origem (compra,nascimento,troca)'); 
+            $table->timestamps();
+        });
     }
 
     /**
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('origin');
     }
 };
