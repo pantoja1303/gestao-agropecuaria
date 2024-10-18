@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Animal;
+use App\Models\Origin;
+use App\Models\Type;
+use App\Models\Breed;
 
 class AnimalController extends Controller
 {
@@ -15,13 +18,17 @@ class AnimalController extends Controller
     {
 
         $animals = DB::table('animals')
-        ->leftJoin('origins', 'animals.origin_id', '=', 'origins.id')
-        ->leftJoin('animal_type', 'animals.animal_type_id', '=', 'animal_type.id')
-        ->leftJoin('animal_breed', 'animals.animal_breed_id', '=', 'animal_breed.id')
-        ->select('animals.*', 'origins.description as origin_description','animal_type.description as animal_type_description','animal_breed.description as animal_breed_description') 
+        ->leftJoin('origin', 'animals.origin_id', '=', 'origin.id')
+        ->leftJoin('type', 'animals.type_id', '=', 'type.id')
+        ->leftJoin('breed', 'animals.breed_id', '=', 'breed.id')
+        ->select(
+            'animals.*'
+            ,'origin.description as origin_description'
+            ,'type.description as type_description'
+            ,'breed.description as breed_description'
+        )
         ->get();
 
-        //$animals = Animal::all();
         return view('animals.index', compact('animals'));
     }
 
@@ -30,7 +37,11 @@ class AnimalController extends Controller
      */
     public function create()
     {
-        return view('animals.create');
+        $origins = Origin::all();
+        $types = Type::all();
+        $breeds = Breed::all();
+
+        return view('animals.create',compact('origins','types','breeds'));
     }
 
     /**
@@ -40,21 +51,21 @@ class AnimalController extends Controller
     {
         $request->validate([
             'ear_tag_number' => 'required|integer|min:1',
-            'id_breed' => 'required|integer|min:1',
-            'type_of_animal' => 'required|integer|min:1',
-            'origin' => 'required|integer|min:1',
+            'breed_id' => 'required|integer|min:1',
+            'type_id' => 'required|integer|min:1',
+            'origin_id' => 'required|integer|min:1',
             'purchase_date' => 'date',
             'birth_date' => 'date',
         ],[
             'ear_tag_number.min' =>'Brinco do animal deve ser preenchido',
-            'id_breed.min' =>'Raça do animal deve ser preenchida',
-            'type_of_animal.min' =>'Tipo do animal deve ser preenchido',
-            'origin.min' =>'Origem do animal deve ser preenchida'
+            'breed_id.min' =>'Raça do animal deve ser preenchida',
+            'type_id.min' =>'Tipo do animal deve ser preenchido',
+            'origin_id.min' =>'Origem do animal deve ser preenchida'
         ]);
 
-        Animal::create($request->all());
+        $animal = Animal::create($request->all());
 
-        return redirect()->route('animals.index')->with('success', 'Animal cadastrado com sucesso!');
+        return redirect()->route('animals.index')->with('success', "Animal (brinco: {$animal->ear_tag_number}) cadastrado com sucesso!");
     }
 
     /**
@@ -72,14 +83,14 @@ class AnimalController extends Controller
     {
         $request->validate([
             'ear_tag_number' => 'required|integer|min:1',
-            'id_breed' => 'required|integer|min:1',
-            'type_of_animal' => 'required|integer|min:1',
-            'origin' => 'required|integer|min:1',
+            'breed_id' => 'required|integer|min:1',
+            'type_id' => 'required|integer|min:1',
+            'origin_id' => 'required|integer|min:1',
         ],[
             'ear_tag_number.min' =>'Brinco do animal deve ser preenchido',
-            'id_breed.min' =>'Raça do animal deve ser preenchida',
-            'type_of_animal.min' =>'Tipo do animal deve ser preenchido',
-            'origin.min' =>'Origem do animal deve ser preenchida'
+            'breed_id.min' =>'Raça do animal deve ser preenchida',
+            'type_id.min' =>'Tipo do animal deve ser preenchido',
+            'origin_id.min' =>'Origem do animal deve ser preenchida'
         ]);
 
         $animal->update($request->all());
@@ -94,6 +105,6 @@ class AnimalController extends Controller
     {
         $animal->delete();
 
-        return redirect()->route('animals.index')->with('success', 'Animal excluído com sucesso!');
+        return redirect()->route('animals.index')->with('success', "Animal (brinco: {$animal->ear_tag_number}) excluído com sucesso!");
     }
 }

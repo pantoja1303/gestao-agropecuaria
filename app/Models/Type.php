@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Animal extends Model
+class Type extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['ear_tag_number', 'breed_id', 'type_id', 'origin_id','purchase_date','birth_date'];
-
+    protected $table = 'type';
 }
