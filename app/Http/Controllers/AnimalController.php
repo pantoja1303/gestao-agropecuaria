@@ -40,8 +40,9 @@ class AnimalController extends Controller
         $origins = Origin::all();
         $types = Type::all();
         $breeds = Breed::all();
+        $animals = Animal::all();
 
-        return view('animals.create',compact('origins','types','breeds'));
+        return view('animals.create',compact('origins','types','breeds','animals'));
     }
 
     /**
@@ -57,10 +58,11 @@ class AnimalController extends Controller
             'purchase_date' => 'date',
             'birth_date' => 'date',
         ],[
-            'ear_tag_number.min' =>'Brinco do animal deve ser preenchido',
-            'breed_id.min' =>'Raça do animal deve ser preenchida',
-            'type_id.min' =>'Tipo do animal deve ser preenchido',
-            'origin_id.min' =>'Origem do animal deve ser preenchida'
+            'ear_tag_number.required' =>'Brinco do animal deve ser preenchido',
+            'breed_id.required' =>'Raça do animal deve ser preenchida',
+            'type_id.required' =>'Tipo do animal deve ser preenchido',
+            'origin_id.required' =>'Origem do animal deve ser preenchida',
+            'birth_date.required' =>'Data de nascimento do animal deve ser preenchida'
         ]);
 
         $animal = Animal::create($request->all());
@@ -73,7 +75,11 @@ class AnimalController extends Controller
      */
     public function edit(Animal $animal, Request $request)
     {
-        return view('animals.edit', compact('animal'));
+        $origins = Origin::all();
+        $types = Type::all();
+        $breeds = Breed::all();
+
+        return view('animals.edit', compact('origins','types','breeds','animal'));
     }
 
     /**
@@ -81,7 +87,7 @@ class AnimalController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $validatedData =  $request->validate([
             'ear_tag_number' => 'required|integer|min:1',
             'breed_id' => 'required|integer|min:1',
             'type_id' => 'required|integer|min:1',
@@ -93,7 +99,11 @@ class AnimalController extends Controller
             'origin_id.min' =>'Origem do animal deve ser preenchida'
         ]);
 
-        $animal->update($request->all());
+        // Encontrar o animal pelo ID
+        $animal = Animal::findOrFail($id);
+
+        // Atualizar os dados do animal com os dados validados
+        $animal->update($validatedData);
 
         return redirect()->route('animals.index')->with('success', 'Animal atualizado com sucesso!');
     }
