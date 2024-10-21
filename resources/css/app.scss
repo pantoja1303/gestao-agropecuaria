@@ -1,1 +1,31 @@
+$enable-grid-classes: true;
+
 @import 'bootstrap/scss/bootstrap';
+
+
+/* Estilos para a barra lateral */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #f8f9fa; /* Cor de fundo da sidebar */
+    padding-top: 20px;
+}
+
+.sidebar .nav-link {
+    padding: 15px 20px;
+    font-size: 16px;
+    color: #000;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #e2e6ea; /* Cor ao passar o mouse */
+    color: #000;
+}
+
+.content {
+    margin-left: 250px; /* Espaço para a sidebar */
+    padding: 20px;
+}
