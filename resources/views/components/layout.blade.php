@@ -7,9 +7,38 @@
     @vite('resources/css/app.scss')
 </head> 
 <body>
-    <div class="container mt-5">
-        <h1>{{$title}}</h1>
-        {{$slot}}
+    <!-- Menu lateral -->
+  <nav class="sidebar navbar-light bg-light backgroud_navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Gestão Agropecuária</a>
+            <ul class="navbar-nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Cadastro de Animais</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Medicamento</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Inseminação</a>
+                </li>
+            </ul>
+        </div>
+    </nav>   
+     <!-- Conteúdo Principal -->
+     <div class="content">
+        <div class="container mt-6">
+            <h1>{{$title}}</h1>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            {{$slot}}
+        </div>
     </div>
 </body>
 </html>

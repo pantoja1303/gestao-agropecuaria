@@ -5,9 +5,10 @@
         {{session('success')}}
     </div>
     @endif
-    <table class="table table-secondary">
+    <table class="table table-striped table-hover">
         <thead>
-            <tr class="table-dark">
+            <tr>
+                <th scope="col">Id</th>
                 <th scope="col">Brinco</th>
                 <th scope="col">Tipo</th>
                 <th scope="col">Raça</th>
@@ -18,6 +19,7 @@
         <tbody>
             @foreach($animals as $animal)
             <tr>
+                <td>{{ $animal->id }}</td>
                 <td>{{ $animal->ear_tag_number }}</td>
                 <td>{{ $animal->type_description }}</td>
                 <td>{{ $animal->breed_description }}</td>
