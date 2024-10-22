@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$title}} - Gestão Agropecuária</title>
-    @vite('resources/css/app.scss')
+    @vite(['resources/js/app.js', 'resources/css/app.scss'])
+    <script src="{{ asset('js/app.js') }}"></script>
 </head> 
 <body>
     <!-- Menu lateral -->

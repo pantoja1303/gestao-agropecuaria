@@ -10,28 +10,21 @@
             <tr>
                 <th scope="col">Id</th>
                 <th scope="col">Brinco</th>
+                <th scope="col">Status</th>
                 <th scope="col">Tipo</th>
                 <th scope="col">Raça</th>
                 <th scope="col">Origem</th>
-                <th scope="col"> </th>
             </tr>
         </thead>
         <tbody>
             @foreach($animals as $animal)
-            <tr>
+            <tr class="clickable-row" data-href="{{ route('animals.edit', $animal->id) }}">
                 <td>{{ $animal->id }}</td>
                 <td>{{ $animal->ear_tag_number }}</td>
+                <td>{{ $animal->status_description }}</td>
                 <td>{{ $animal->type_description }}</td>
                 <td>{{ $animal->breed_description }}</td>
                 <td>{{ $animal->origin_description }}</td>
-                <td>    
-                    <a href="{{ route('animals.edit', $animal->id) }}" class="btn btn-warning">Editar</a>
-                    <form action="{{ route('animals.destroy', $animal->id) }}" method="POST" style="display:inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">X</button>
-                    </form>
-                </td>
             </tr>
             @endforeach
         </tbody>

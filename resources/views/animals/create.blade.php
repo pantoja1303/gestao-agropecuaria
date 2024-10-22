@@ -5,6 +5,7 @@
         :origins="$origins" 
         :types="$types" 
         :breeds="$breeds"
+        :statuses="$status"
         :animal="$animals"
     />
 </x-layout>
