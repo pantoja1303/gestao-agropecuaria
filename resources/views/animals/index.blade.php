@@ -18,7 +18,7 @@
         </thead>
         <tbody>
             @foreach($animals as $animal)
-            <tr class="clickable-row" data-href="{{ route('animals.edit', $animal->id) }}">
+            <tr class="clickable-row" data-href="{{ route('animals.show', $animal->id) }}">
                 <td>{{ $animal->id }}</td>
                 <td>{{ $animal->ear_tag_number }}</td>
                 <td>{{ $animal->status_description }}</td>

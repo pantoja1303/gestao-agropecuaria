@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 var rows = document.querySelectorAll('.clickable-row');
 rows.forEach(function(row) {
     row.addEventListener('click', function() {
-        window.location = this.dataset.href;
+        window.open(row.dataset.href, '_blank', 'width=800,height=600');
     });
 });
 });

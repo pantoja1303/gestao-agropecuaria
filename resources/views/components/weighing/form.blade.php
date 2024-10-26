@@ -1,16 +1,28 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{$title}} - Gestão Agropecuária</title>
-    @vite(['resources/js/app.js', 'resources/css/app.scss'])
-    <script src="{{ asset('js/app.js') }}"></script>
-</head> 
-<body>
+<x-weighing.layout>
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card">
+            <ul class="nav nav-tabs">
+            <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ route('animals.index') }}">Home</a>
+            </li>
+            <li class="nav-item">
+                    @if (@isset($animal->id))
+                        <a class="nav-link" href="{{ route('animals.edit', $animal->id) }}">Cadastro</a>
+                    @else
+                        <a class="nav-link" href="{{ route('animals.create') }}">Cadastro</a>
+                    @endif
+                </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Pesagem</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Reprodução</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true">Sanidade</a>
+            </li>
+            </ul>
             <div class="card-body">
                 <form action="{{ $action }}" method="POST">
                     @csrf
@@ -119,5 +131,4 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+</x-weighing.layout>

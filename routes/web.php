@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\WeighingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,6 @@ use App\Http\Controllers\AnimalController;
 
 
 Route::resource('animals', AnimalController::class);
+
+//a pesagem e diretamente vinculada ao animal
+Route::resource('animals.weighings', WeighingController::class);

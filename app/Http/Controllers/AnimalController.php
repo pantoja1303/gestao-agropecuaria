@@ -127,4 +127,13 @@ class AnimalController extends Controller
 
         return redirect()->route('animals.index')->with('success', "Animal (brinco: {$animal->ear_tag_number}) excluído com sucesso!");
     }
+ 
+    public function show($id)
+{
+    // Encontre o animal pelo ID
+    $animal = Animal::findOrFail($id);
+
+    // Retorne a view principal 'show.blade.php'
+    return view('animals.show', compact('animal'));
+}
 }
