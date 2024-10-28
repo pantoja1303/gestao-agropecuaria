@@ -1,134 +1,69 @@
-<x-weighing.layout>
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card">
-            <ul class="nav nav-tabs">
-            <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ route('animals.index') }}">Home</a>
-            </li>
-            <li class="nav-item">
-                    @if (@isset($animal->id))
-                        <a class="nav-link" href="{{ route('animals.edit', $animal->id) }}">Cadastro</a>
-                    @else
-                        <a class="nav-link" href="{{ route('animals.create') }}">Cadastro</a>
-                    @endif
-                </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Pesagem</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Reprodução</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Sanidade</a>
-            </li>
-            </ul>
-            <div class="card-body">
-                <form action="{{ $action }}" method="POST">
-                    @csrf
-                    @isset($animal->id)
-                    @method('PUT')
-                    @endisset
-                    <div class="row">
-                        <div class="col">
-                            <label for="ear_tag_number">Nº Brinco*</label>
-                            <input 
-                                type="number" 
-                                name="ear_tag_number" 
-                                class="form-control" required 
-                                value ="{{ old('ear_tag_number', isset($animal->ear_tag_number) ? $animal->ear_tag_number : '') }}">
-                        </div>
-                        <div class="col">
-                            <label for="status_id">Status*</label>
-                            <select 
-                                name="status_id" 
-                                id="status_id" 
-                                class="form-control" required>
-                                <option value="">Selecione um status</option>
-                                    @foreach ($statuses as $status)
-                                        <option value="{{ $status->id }}" 
-                                            {{ old('status_id', isset($animal->status_id) ? $animal->status_id : '') == $status->id ? 'selected' : '' }}>
-                                            {{ $status->description }}
-                                        </option>
-                                    @endforeach
-                            </select>
-                        </div>
-                        <div class="col">
-                            <label for="breed">Raça*</label>
-                            <select name="breed_id" id="breed_id" class="form-control" required>
-                                <option value="">Selecione uma raça</option>
-                                @foreach ($breeds as $breed)
-                                    <option value="{{ $breed->id }}"
-                                        {{ old('breed_id', isset($animal->breed_id) ? $animal->breed_id : '') == $breed->id ? 'selected' : '' }}>
-                                        {{ $breed->description }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="type">Tipo do Animal*</label>
-                            <select name="type_id" id="type_id" class="form-control" required>
-                                <option value="">Selecione um tipo</option>
-                                @foreach ($types as $type)
-                                    <option value="{{ $type->id }}" 
-                                        {{ old('type_id', isset($animal->type_id) ? $animal->type_id : '') == $type->id ? 'selected' : '' }}>
-                                        {{ $type->description }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>                       
-                        <div class="col">
-                            <label for="origin_id">Origem*</label>
-                            <select 
-                                name="origin_id" 
-                                id="origin_id" 
-                                class="form-control" required
-                                @isset($animal->origin_id)value="{{$animal->origin_id}}"@endisset>
-                                <option value="">Selecione uma origem</option>
-                                    @foreach ($origins as $origin)
-                                        <option value="{{ $origin->id }}" 
-                                            {{ old('origin_id', isset($animal->origin_id) ? $animal->origin_id : '') == $origin->id ? 'selected' : '' }}>
-                                            {{ $origin->description }}
-                                        </option>
-                                    @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="data_compra">Data de Compra</label>
-                            <input 
-                                type="date" 
-                                name="purchase_date" 
-                                class="form-control"
-                                value ="{{ old('purchase_date', isset($animal->purchase_date) ? $animal->purchase_date : '') }}">
-                        </div>
-                        <div class="col">
-                            <label for="data_nascimento">Data de Nascimento*</label>
-                            <input 
-                                type="date" 
-                                name="birth_date" 
-                                class="form-control" required
-                                value ="{{ old('birth_date', isset($animal->birth_date) ? $animal->birth_date : '') }}">
-                        </div>
-                    </div>
-                    <div class="text-end mt-3">
-                        <button type="submit" class="btn btn-primary btn-block mt-3">Gravar</button>
-                    @isset($animal->id)
-                        <button class="btn btn-danger mt-3" onclick="event.preventDefault(); document.getElementById('delete-form').submit();">Excluir </button>
-                    @endisset
-                    </div>
-                </form>
-                @isset($animal->id)
-                <form id="delete-form" action="{{ route('animals.destroy', $animal->id) }}" method="POST" style="display: none;">
-                    @csrf
-                    @method('DELETE')
-                </form>
-                @endisset
+<x-simple title="Registrar Pesagem">
+    <form id="weighing-form" action="{{ $action }}" method="POST">
+        @csrf
+        @isset($weighing->id)
+            @method('PUT')
+        @endisset
+        <div class="row">
+            <div class="col">
+                <label for="weighing_date" class="form-label">Data da Pesagem</label>
+                <input 
+                    type="date" 
+                    name="weighing_date" 
+                    class="form-control" required
+                    value ="{{ old('weighing_date', isset($weighing->weighing_date) ? $weighing->weighing_date : '') }}">
+            </div>
+            <div class="col">
+                <label for="weight" class="form-label">Peso</label>
+                <input 
+                    type="number" 
+                    step="0.01" 
+                    name="weight" 
+                    class="form-control" required
+                    value ="{{ old('weight', isset($weighing->weight) ? $weighing->weight : '') }}">
             </div>
         </div>
-    </div>
-</div>
-</x-weighing.layout>
+        <div class="text-end mt-2">
+            <button type="submit" class="btn btn-primary btn-block mt-3">Gravar</button>
+            @isset($weighing->id)
+                <button class="btn btn-danger mt-3" onclick="event.preventDefault(); document.getElementById('delete-form').submit();">Excluir</button>
+            @endisset
+        </div>
+    </form>
+    @isset($weighing->id)
+        <form id="delete-form" action="{{ route('animals.weighings.update', ['animal' => $animal->id, 'weighing' => $weighing->id]) }}" method="POST" style="display: none;">
+            @csrf
+            @method('DELETE')
+        </form>
+    @endisset
+</x-simple>
+
+<script>
+    document.getElementById('weighing-form').addEventListener('submit', function(e) {
+        e.preventDefault(); // Previne o envio tradicional do formulário
+
+        const form = this;
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.opener.location.reload(); // Atualiza a janela principal
+                window.close(); // Fecha a janela popup
+            } else {
+                alert('Erro ao gravar a pesagem.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao processar o formulário.');
+        });
+    });
+</script>

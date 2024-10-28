@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$title}} - Gestão Agropecuária</title>
     @vite(['resources/js/app.js', 'resources/css/app.scss'])
-    <script src="{{ asset('js/app.js') }}"></script>
 </head> 
 <body>
 <div class="row justify-content-center">

@@ -9,17 +9,11 @@
         </thead>
         <tbody>
             @foreach($weighings as $weighing)
-                <tr>
-                    <td>{{ \Carbon\Carbon::parse($weighing->weighing_date)->format('d/m/Y')}}</td>
+                <tr onclick="openPopup('{{ route('animals.weighings.edit', ['animal' => $animal->id, 'weighing' => $weighing->id]) }}')" style="cursor: pointer;">
+                    <td>{{ \Carbon\Carbon::parse($weighing->weighing_date)->format('d/m/Y') }}</td>
                     <td>{{ $weighing->weight }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 </x-simple>
-
-<script>
-    function openPopup(url) {
-        window.open(url, 'popup', 'width=400,height=200');
-    }
-</script>

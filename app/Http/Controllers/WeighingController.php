@@ -46,17 +46,16 @@ class WeighingController extends Controller
             'weighing_date' => 'required|date',
             'weight' => 'required|numeric|min:0',
         ]);
-
-        $weighing->update($request->only('weighing_date', 'weight'));
-
-        return redirect()->route('animals.weighings.index', $animal->id)->with('success', 'Pesagem atualizada com sucesso.');
+   
+        $weighing->update($request->only(['weighing_date', 'weight']));
+        return response()->json(['success' => true]);
     }
 
     public function destroy(Animal $animal, Weighing $weighing)
     {
         $weighing->delete();
 
-        return redirect()->route('animals.weighings.index', $animal->id)->with('success', 'Pesagem excluída com sucesso.');
+        return response()->json(['success' => true]);
     }
 }
 
