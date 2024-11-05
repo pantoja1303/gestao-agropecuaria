@@ -22,8 +22,6 @@
 
     <!-- Script agora está dentro do body e após o conteúdo principal -->
     <script>
-        console.log("Script carregado"); // Verificação de carregamento do script
-
         function openPopup(url) {
             window.open(url, 'popup', 'width=400,height=200');
         }
