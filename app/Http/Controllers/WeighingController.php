@@ -9,7 +9,7 @@ class WeighingController extends Controller
 {
     public function index(Animal $animal)
     {
-        $weighings = $animal->weighings; // Pesagens relacionadas ao animal
+        $weighings = $animal->weighings()->orderBy('weighing_date','asc')->get(); // Pesagens relacionadas ao animal
         
         return view('weighings.index', compact('animal', 'weighings'));
     }

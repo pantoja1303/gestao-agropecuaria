@@ -25,18 +25,14 @@
         console.log("Script carregado"); // Verificação de carregamento do script
 
         function openPopup(url) {
-            console.log("Abrindo popup com URL:", url); // Debug da função de popup
             window.open(url, 'popup', 'width=400,height=200');
         }
 
         // Script para associar o evento de clique após o carregamento do DOM
         document.addEventListener('DOMContentLoaded', function () {
-            console.log("DOM completamente carregado e analisado"); // Verificação de carregamento do DOM
             var rows = document.querySelectorAll('.clickable-row');
-            console.log("Linhas encontradas:", rows.length); // Verifica se as linhas foram encontradas
             rows.forEach(function(row) {
                 row.addEventListener('click', function() {
-                    console.log('Linha clicada:', row.dataset.href); // Debug do evento de clique
                     openPopup(row.dataset.href); // Abre a URL no popup
                 });
             });
