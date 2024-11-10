@@ -17,4 +17,11 @@ class Animal extends Model
          return $this->hasMany(Weighing::class); // Um animal tem muitas pesagens
      }
 
+        // Definir o relacionamento com a model Weighing (um animal pode ter muitas pesagens)
+        public function medication()
+        {
+            return $this->hasMany(Medication::class); // Um animal tem muitas pesagens
+        }
+     
+
 }
