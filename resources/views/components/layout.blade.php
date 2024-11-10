@@ -11,13 +11,13 @@
     <!-- Menu lateral -->
   <nav class="sidebar navbar-light bg-light backgroud_navbar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Gestão Agropecuária</a>
+            <a class="navbar-brand" href="">Gestão Agropecuária</a>
             <ul class="navbar-nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Cadastro de Animais</a>
+                    <a class="nav-link" href="{{ route('animals.index') }}">Cadastro de Animais</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Medicamento</a>
+                    <a class="nav-link" href="{{ route('medications.index') }}">Medicamento</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Inseminação</a>
