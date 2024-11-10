@@ -9,9 +9,8 @@
 </head> 
 <body>
     <!-- Menu lateral -->
-  <nav class="sidebar navbar-light bg-light backgroud_navbar">
+    <nav class="sidebar navbar-light bg-light backgroud_navbar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="">Gestão Agropecuária</a>
             <ul class="navbar-nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('animals.index') }}">Cadastro de Animais</a>
@@ -22,11 +21,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Inseminação</a>
                 </li>
+                <li class="nav-item mt-3">
+                    <!-- Botão de Logout -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-link nav-link">Logout</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>   
-     <!-- Conteúdo Principal -->
-     <div class="content">
+    <!-- Conteúdo Principal -->
+    <div class="content">
         <div class="container mt-6">
             <h1>{{$title}}</h1>
             @if ($errors->any())
