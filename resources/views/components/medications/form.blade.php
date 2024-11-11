@@ -11,6 +11,15 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
+                        @if ($errors->any())
+                    <div class="alert alert-danger">
+                    <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                </div>
+            @endif
                 <form action="{{ $action }}" method="POST">
                     @csrf
                     @isset($medication->id)
@@ -110,7 +119,7 @@
                     </div>
                 </form>
                 @isset($medication->id)
-                <form id="delete-form" action="{{ route('animals.destroy', $animal->id) }}" method="POST" style="display: none;">
+                <form id="delete-form" action="{{ route('medications.destroy', $medication->id) }}" method="POST" style="display: none;">
                     @csrf
                     @method('DELETE')
                 </form>

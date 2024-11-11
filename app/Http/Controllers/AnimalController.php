@@ -54,23 +54,7 @@ class AnimalController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'ear_tag_number' => 'required|integer|min:1|unique:animals,ear_tag_number',
-            'breed_id' => 'required|integer|min:1',
-            'type_id' => 'required|integer|min:1',
-            'origin_id' => 'required|integer|min:1',
-            'status_id' => 'required|integer|min:1',
-            'purchase_date' => 'date',
-            'birth_date' => 'date',
-        ],[
-            'ear_tag_number.required' =>'Brinco do animal deve ser preenchido',
-            'ear_tag_number.unique' =>'Este número de brinco já está cadastrado para outro animal',
-            'breed_id.required' =>'Raça do animal deve ser preenchida',
-            'type_id.required' =>'Tipo do animal deve ser preenchido',
-            'origin_id.required' =>'Origem do animal deve ser preenchida',
-            'status_id.required' =>'Status do animal deve ser preenchido',
-            'birth_date.required' =>'Data de nascimento do animal deve ser preenchida'
-        ]);
+        $this->validatedData($request);
 
         $animal = Animal::create($request->all());
 
@@ -95,20 +79,7 @@ class AnimalController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validatedData =  $request->validate([
-            'ear_tag_number' => 'required|integer|min:1',
-            'breed_id' => 'required|integer|min:1',
-            'type_id' => 'required|integer|min:1',
-            'origin_id' => 'required|integer|min:1',
-            'status_id' => 'required|integer|min:1',
-        ],[
-            'ear_tag_number.required' =>'Brinco do animal deve ser preenchido',
-            'breed_id.required' =>'Raça do animal deve ser preenchida',
-            'type_id.required' =>'Tipo do animal deve ser preenchido',
-            'origin_id.required' =>'Origem do animal deve ser preenchido',
-            'status_id.required' =>'Status do animal deve ser preenchida'
-        ]);
-
+        $validatedData = $this->validatedData($request,$id);
         // Encontrar o animal pelo ID
         $animal = Animal::findOrFail($id);
 
@@ -129,11 +100,45 @@ class AnimalController extends Controller
     }
  
     public function show($id)
-{
-    // Encontre o animal pelo ID
-    $animal = Animal::findOrFail($id);
+    {
+        // Encontre o animal pelo ID
+        $animal = Animal::findOrFail($id);
 
-    // Retorne a view principal 'show.blade.php'
-    return view('animals.show', compact('animal'));
-}
+        // Retorne a view principal 'show.blade.php'
+        return view('animals.show', compact('animal'));
+    }
+
+    public function validatedData(Request $request,int $id = 0) {
+
+        $rules = [
+            'breed_id' => 'required|integer|min:1',
+            'type_id' => 'required|integer|min:1',
+            'origin_id' => 'required|integer|min:1',
+            'status_id' => 'required|integer|min:1',
+            'birth_date' => 'date|nullable', // birth_date pode ser opcional
+        ];
+
+        if ($request->origin_id == 1) { // Ajuste o valor 1 para o tipo correto de "compra"
+            $rules['purchase_date'] = 'required|date|after_or_equal:birth_date';
+        } else {
+            // Caso o tipo não seja "compra", a data de compra pode ser nula
+            $rules['purchase_date'] = 'nullable|date';
+        }
+
+        if(!empty($id)){
+            $rules['ear_tag_number'] ='required|integer|min:1';
+        }else{
+            $rules['ear_tag_number'] ='required|integer|min:1|unique:animals,ear_tag_number';
+        }
+
+        return $request->validate($rules,[
+            'ear_tag_number.required' =>'Brinco do animal deve ser preenchido',
+            'breed_id.required' =>'Raça do animal deve ser preenchida',
+            'type_id.required' =>'Tipo do animal deve ser preenchido',
+            'origin_id.required' =>'Origem do animal deve ser preenchido',
+            'status_id.required' =>'Status do animal deve ser preenchida',
+            'purchase_date.required' => 'Data da compra não foi preenchida',
+            'purchase_date.after_or_equal'=> 'Data da compra deve ser igual ou maior a data do nascimento'
+        ]);
+    }
 }
