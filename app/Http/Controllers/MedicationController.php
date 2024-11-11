@@ -17,21 +17,20 @@ class MedicationController extends Controller
     public function index()
     {
         $medications = DB::table('medications')
-        ->leftJoin('status_medications', 'status_medications.id', '=', 'medications.status_medication_id')
-        ->leftJoin('drugs', 'drugs.id', '=', 'medications.drug_id')
-        ->leftJoin('drugs_classifications', 'drugs_classifications.id', '=', 'drugs.drug_classification_id')
-        ->leftJoin('animals', 'animals.id', '=', 'medications.animal_id')
-        ->select(
-            'medications.*'
-            ,'status_medications.description as status_medication_description'
-            ,'drugs.description as drug_description'
-            ,'drugs_classifications.description as drug_classification_description'
-            ,'animals.ear_tag_number as ear_tag_number'
-        )
-        ->get();
+            ->leftJoin('status_medications', 'status_medications.id', '=', 'medications.status_medication_id')
+            ->leftJoin('drugs', 'drugs.id', '=', 'medications.drug_id')
+            ->leftJoin('drugs_classifications', 'drugs_classifications.id', '=', 'drugs.drug_classification_id')
+            ->leftJoin('animals', 'animals.id', '=', 'medications.animal_id')
+            ->select(
+                'medications.*',
+                'status_medications.description as status_medication_description',
+                'drugs.description as drug_description',
+                'drugs_classifications.description as drug_classification_description',
+                'animals.ear_tag_number as ear_tag_number'
+            )
+            ->get();
 
         return view('medications.index', compact('medications'));
-
     }
 
     /**
@@ -44,7 +43,7 @@ class MedicationController extends Controller
         $animals = Animal::all();
         $medications = Medication::all();
 
-        return view('medications.create',compact('drugs','statusMedication','animals','medications'));
+        return view('medications.create', compact('drugs', 'statusMedication', 'animals', 'medications'));
     }
 
     /**
@@ -58,12 +57,12 @@ class MedicationController extends Controller
             'quantity' => 'required|numeric|min:1',
             'drug_id' => 'required|integer|min:1',
             'status_medication_id' => 'required|integer|min:1',
-        ],[
-            'animal_Id.required' =>'Brinco do animal deve ser preenchido',
-            'administration_date.unique' =>'Data da administração deve ser preenchida',
-            'quantity.required' =>'Quantidade deve ser preenchida',
-            'drug_id.required' =>'Medicamento deve ser preenchido',
-            'status_medication_id.required' =>'Status deve ser preenchido'
+        ], [
+            'animal_Id.required' => 'Brinco do animal deve ser preenchido',
+            'administration_date.unique' => 'Data da administração deve ser preenchida',
+            'quantity.required' => 'Quantidade deve ser preenchida',
+            'drug_id.required' => 'Medicamento deve ser preenchido',
+            'status_medication_id.required' => 'Status deve ser preenchido'
         ]);
 
         Medication::create($request->all());
@@ -89,7 +88,7 @@ class MedicationController extends Controller
         $statusMedication = StatusMedication::all();
         $animals = Animal::all();
 
-        return view('medications.edit',compact('drugs','statusMedication','animals','medication'));
+        return view('medications.edit', compact('drugs', 'statusMedication', 'animals', 'medication'));
     }
 
     /**
@@ -103,12 +102,12 @@ class MedicationController extends Controller
             'quantity' => 'required|numeric|min:1',
             'drug_id' => 'required|integer|min:1',
             'status_medication_id' => 'required|integer|min:1',
-        ],[
-            'animal_Id.required' =>'Brinco do animal deve ser preenchido',
-            'administration_date.unique' =>'Data da administração deve ser preenchida',
-            'quantity.required' =>'Quantidade deve ser preenchida',
-            'drug_id.required' =>'Medicamento deve ser preenchido',
-            'status_medication_id.required' =>'Status deve ser preenchido'
+        ], [
+            'animal_Id.required' => 'Brinco do animal deve ser preenchido',
+            'administration_date.unique' => 'Data da administração deve ser preenchida',
+            'quantity.required' => 'Quantidade deve ser preenchida',
+            'drug_id.required' => 'Medicamento deve ser preenchido',
+            'status_medication_id.required' => 'Status deve ser preenchido'
         ]);
 
         // Encontrar o animal pelo ID
@@ -118,7 +117,6 @@ class MedicationController extends Controller
         $medication->update($validatedData);
 
         return response()->json(['success' => true]);
-
     }
 
     /**
