@@ -24,9 +24,15 @@
             </div>
         </div>
         <div class="text-end mt-2">
-            <button type="submit" class="btn btn-primary btn-block mt-3">Gravar</button>
+            <button type="submit" class="btn mt-3">
+                <img src="{{ asset('images/gravar.png') }}" alt="Gravar" width="30" height="30">
+                Gravar
+            </button>
             @isset($weighing->id)
-                <button class="btn btn-danger mt-3" onclick="event.preventDefault(); document.getElementById('delete-form').submit();">Excluir</button>
+                <button class="btn mt-3" onclick="event.preventDefault(); document.getElementById('delete-form').submit();">
+                    <img src="{{ asset('images/excluir.png') }}" alt="Excluir" width="30" height="30">
+                    Excluir
+                </button>
             @endisset
         </div>
     </form>

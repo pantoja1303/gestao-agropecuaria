@@ -1,6 +1,7 @@
 <x-simple title="Pesagens">
-    <a href="{{ route('animals.weighings.create', $animal->id) }}" class="btn btn-primary mb-3" onclick="openPopup(this.href); return false;">Registrar Nova Pesagem</a>
-    
+    <a href="{{ route('animals.weighings.create', $animal->id) }}" class="btn" onclick="openPopup(this.href); return false;">
+    <img src="{{ asset('images/registro.png') }}" alt="Registrar Pesagem" title="Registrar Pesagem" width="40" height="40">
+    </a>
     <table class="table table-striped table-hover">
         <thead>
             <tr>

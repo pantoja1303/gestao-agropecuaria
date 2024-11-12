@@ -66,7 +66,7 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="nav-link button-with-icon">
-                            <img src="{{ asset('images/sair-do-usuario.png') }}" alt="Inseminação">
+                            <img src="{{ asset('images/sair-do-usuario.png') }}" alt="Sair">
                             Logout
                         </button>
                     </form>
