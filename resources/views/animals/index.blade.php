@@ -39,7 +39,7 @@
                     <form action="{{ route('animals.destroy', $animal->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" style="background:none; border:none; padding:0; margin-left:15px;" onclick="return confirm('Tem certeza que deseja excluir este animal?')">
+                        <button type="submit" style="background:none; border:none; padding:0; margin-left:15px;" onclick="return confirm('Tem certeza que deseja excluir?')">
                             <img src="{{ asset('images/excluir.png') }}" alt="Excluir" title="Excluir" width="30" height="30">
                         </button>
                     </form>

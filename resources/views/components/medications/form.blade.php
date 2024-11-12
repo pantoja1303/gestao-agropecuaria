@@ -110,53 +110,19 @@
                                 value ="{{ old('unit', isset($medication->observation) ? $medication->observation : '') }}">
                         </div>
                     </div>
-
                     <div class="text-end mt-3">
-                        <button type="submit" class="btn btn-primary btn-block mt-3">Gravar</button>
-                    @isset($medication->id)
-                        <button class="btn btn-danger mt-3" onclick="event.preventDefault(); document.getElementById('delete-form').submit();">Excluir </button>
-                    @endisset
+                        <button type="submit" class="btn mt-1">
+                        <img src="{{ asset('images/gravar.png') }}" alt="Gravar" width="30" height="30">
+                            Gravar
+                        </button>
+                        <a href="{{ route('medications.index') }}" class="btn mt-1" title="Voltar">
+                            <img src="{{ asset('images/voltar.png') }}" alt="Voltar" width="30" height="30">
+                            Voltar
+                        </a>
                     </div>
-                </form>
-                @isset($medication->id)
-                <form id="delete-form" action="{{ route('medications.destroy', $medication->id) }}" method="POST" style="display: none;">
-                    @csrf
-                    @method('DELETE')
-                </form>
-                @endisset
             </div>
         </div>
     </div>
 </div>
 </body>
 </html>
-
-<script>
-    document.getElementById('medication-form').addEventListener('submit', function(e) {
-        e.preventDefault(); // Previne o envio tradicional do formulário
-
-        const form = this;
-        const formData = new FormData(form);
-
-        fetch(form.action, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                window.opener.location.reload(); // Atualiza a janela principal
-                window.close(); // Fecha a janela popup
-            } else {
-                alert('Erro ao gravar a pesagem.');
-            }
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-            alert('Erro ao processar o formulário.');
-        });
-    });
-</script>

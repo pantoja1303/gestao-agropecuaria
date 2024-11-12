@@ -51,19 +51,7 @@ class MedicationController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'animal_id' => 'required|integer|min:1',
-            'administration_date' => 'required|date',
-            'quantity' => 'required|numeric|min:1',
-            'drug_id' => 'required|integer|min:1',
-            'status_medication_id' => 'required|integer|min:1',
-        ], [
-            'animal_Id.required' => 'Brinco do animal deve ser preenchido',
-            'administration_date.unique' => 'Data da administração deve ser preenchida',
-            'quantity.required' => 'Quantidade deve ser preenchida',
-            'drug_id.required' => 'Medicamento deve ser preenchido',
-            'status_medication_id.required' => 'Status deve ser preenchido'
-        ]);
+        $this->validatedData($request);
 
         Medication::create($request->all());
 
@@ -96,19 +84,7 @@ class MedicationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validatedData = $request->validate([
-            'animal_id' => 'required|integer|min:1',
-            'administration_date' => 'required|date',
-            'quantity' => 'required|numeric|min:1',
-            'drug_id' => 'required|integer|min:1',
-            'status_medication_id' => 'required|integer|min:1',
-        ], [
-            'animal_Id.required' => 'Brinco do animal deve ser preenchido',
-            'administration_date.unique' => 'Data da administração deve ser preenchida',
-            'quantity.required' => 'Quantidade deve ser preenchida',
-            'drug_id.required' => 'Medicamento deve ser preenchido',
-            'status_medication_id.required' => 'Status deve ser preenchido'
-        ]);
+        $validatedData = $this->validatedData($request);
 
         // Encontrar o animal pelo ID
         $medication = Medication::findOrFail($id);
@@ -116,14 +92,34 @@ class MedicationController extends Controller
         // Atualizar os dados do animal com os dados validados
         $medication->update($validatedData);
 
-        return response()->json(['success' => true]);
+        return redirect()->route('medications.index')->with('success', 'Medicação atualizado com sucesso!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Medication $medication, Request $request)
     {
-        //
+        $medication->delete();
+
+        return redirect()->route('medications.index')->with('success', "Medicação #$medication->id excluída com sucesso!");
+    }
+
+    public function validatedData(Request $request)
+    {
+        return $request->validate([
+            'animal_id' => 'required|integer|min:1',
+            'administration_date' => 'required|date',
+            'quantity' => 'required|numeric|min:1',
+            'drug_id' => 'required|integer|min:1',
+            'status_medication_id' => 'required|integer|min:1',
+            'observation' => 'nullable|string',
+        ], [
+            'animal_Id.required' => 'Brinco do animal deve ser preenchido',
+            'administration_date.unique' => 'Data da administração deve ser preenchida',
+            'quantity.required' => 'Quantidade deve ser preenchida',
+            'drug_id.required' => 'Medicamento deve ser preenchido',
+            'status_medication_id.required' => 'Status deve ser preenchido'
+        ]);
     }
 }

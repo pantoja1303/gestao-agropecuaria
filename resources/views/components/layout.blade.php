@@ -6,8 +6,7 @@
     <title>{{$title}} - Gestão Agropecuária</title>
     @vite([
         'resources/js/app.js',
-        'resources/css/app.scss',
-        'resources/js/layouts/medication.js'
+        'resources/css/app.scss'
     ])
     <style>
 /  /* Estilo para o botão com imagem e texto */
